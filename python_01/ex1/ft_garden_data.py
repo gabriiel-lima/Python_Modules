@@ -3,9 +3,10 @@ class Plant:
         self.name = name
         self.height = height
         self.age = age
-    
+
     def show(self):
         print(f"{self.name}: {self.height}cm, {self.age} days old")
+
 
 def main():
     a = Plant("Rose", 50, 18)
@@ -15,6 +16,7 @@ def main():
     a.show()
     b.show()
     c.show()
+
 
 if __name__ == "__main__":
     main()

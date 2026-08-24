@@ -4,14 +4,14 @@ class Plant:
         self.height = height
         self.age = age
         self.week_growth = 0
-    
+
     def show(self):
         print(f"{self.name}: {round(self.height, 2)}cm, {self.age} days old")
 
     def grow(self, evolution: float):
         self.height = self.height + evolution
         self.week_growth += evolution
-    
+
     def old(self, stage: int):
         self.age = self.age + 1
 
@@ -30,9 +30,6 @@ def main():
         i += 1
     print(f"Growth this week: {plant1.week_growth}")
 
+
 if __name__ == "__main__":
     main()
-
-
-
-
