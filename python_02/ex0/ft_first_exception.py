@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 def input_temperature(value: str) -> int:
     value_int: int = int(value)
     return (value_int)
@@ -20,6 +22,7 @@ def main() -> None:
     print("=== Garden Temperature ===")
     test_temperature('25')
     test_temperature('abc')
+    print("\nAll tests completed - program didn't crash!")
 
 
 if __name__ == '__main__':
