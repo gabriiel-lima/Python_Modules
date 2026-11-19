@@ -80,15 +80,22 @@ class LogProcessor(DataProcessor):
         else:
             flag = False
         return flag
-    
+
     def ingest(self, data: any) -> None:
         if self.validate(data):
             if isinstance(data, list):
                 for d in data:
-                    self.store.extend([[k, v] for k, v in d.items()])
+                    
+                    # print(f"D -- {d['log_level']}: {d['log_message']}")
+                    self.store.append((self.rank, f"{d['log_level']}: {d['log_message']}",))
+                    
+                    self.rank += 1
             else:
-                test = list(data.items())
-                self.store.append((test[0][0], test[0][1]))
+                self.store.append(
+                    f"{data['log_level']}: "
+                    f"{data['log_message']}"
+                )
+                self.rank += 1
         else:
             print("INvalid dict")
 
@@ -104,7 +111,7 @@ def main() -> None:
     print(f"Trying to validate input '42': {numeric.validate(42)}")
     print(f"Trying to validate input 'Hello': {numeric.validate('Hello')}")
     print("Test invalid ingestion of string 'foo' without prior validation:")
-    numeric.ingest('foo')
+    numeric.ingest("foo")
     print("Processing data: [1, 2, 3, 4, 5]")
     print("Extracting 3 values...")
     numeric.ingest([1, 2, 3])
@@ -115,7 +122,7 @@ def main() -> None:
     print("-------------------------")
     print(f"Trying to validate input '42': {text.validate(42)}")
     print("Processing data: ['Hello', 'Nexus', 'Word']")
-    text.ingest(['Hello', 'Nexus', 'Word'])
+    text.ingest(["Hello", "Nexus", "Word"])
     print("Extracting 1 value...")
     outtext = text.output()
     print(f"Numeric Value {outtext[0]}: {outtext[1]}")
@@ -127,14 +134,16 @@ def main() -> None:
         "'Connection to server'}, {'log_level': 'ERROR"
         "', 'log_message': 'Unauthorized access!!'}]'"
     )
-    log.ingest([
-        {'log_level': 'NOTICE', 'log_message': 'Connection to server'},
-        {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}
-    ])
+    log.ingest(
+        [
+            {"log_level": "NOTICE", "log_message": "Connection to server"},
+            {"log_level": "ERROR", "log_message": "Unauthorized access!!"},
+        ]
+    )
     print("Extracting 2 values...")
     for x in range(2):
         logout = log.output()
-        print(f"Log entry {x}: {logout[0]} : {logout[1]}")
+        print(f"Log entry {x}: {logout}")
 
 
 if __name__ == "__main__":
