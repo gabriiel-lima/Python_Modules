@@ -24,10 +24,10 @@ class Json:
 class Csv:
     def __init__(self):
         self.store: list[tuple[int, str]] = []
-    
+
     def make_save(self, data: tuple[int, str]):
         self.store.append((data[1]))
-    
+
     def process_output(self, data: list[tuple[int, str]]) -> None:
         print("CSV Output:")
         for peer in self.store:
@@ -97,7 +97,6 @@ def main() -> None:
     np = NumericProcessor()
     tp = TextProcessor()
     lp = LogProcessor()
-   
     datastream.register_processor(np)
     datastream.register_processor(tp)
     datastream.register_processor(lp)
@@ -128,7 +127,6 @@ def main() -> None:
         "'log_message': 'Certificate expires in 10 days'}], "
         "[32, 42, 64, 84, 128, 168], 'World hello']"
     )
-
     datastream.process_stream(
         [
             21,
@@ -154,6 +152,8 @@ def main() -> None:
     datastream.print_processors_stats()
     print("\nSend 5 processed data from each processor to a JSON plugin:")
     datastream.output_pipeline(5, js)
+    datastream.print_processors_stats()
+
 
 if __name__ == '__main__':
     main()
